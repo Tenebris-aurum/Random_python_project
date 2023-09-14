@@ -1,0 +1,68 @@
+#Imporation of the modules
+
+from random import choice
+
+#Définition de toutes les variables 
+li = ('pierre','papier','ciseaux')
+nul_count = 0
+lose_count = 0
+win_count = 0
+pierre_count = 0
+papier_count = 0
+ciseaux_count = 0
+i = 0
+#Pour changer le nombre de simulations changer la variable "t"
+t = 10000
+
+#Creation d'une fonction de jeu
+def game():
+    global nul_count, lose_count, win_count, pierre_count, papier_count, ciseaux_count
+    
+    # L'ordinateur joue une partie
+    def iacho():
+        ia = choice([0, 1, 2])
+        choia = li[ia]
+        return ia
+
+    a = iacho()
+    b = iacho()
+
+    # Le programme récupere les résulats de la partie venant d'être jouée
+    def trier():
+        global nul_count, lose_count, win_count, pierre_count, papier_count, ciseaux_count
+        if a == 0:
+            pierre_count +=1
+        elif a == 1:
+            papier_count += 1
+        else:
+            ciseaux_count += 1
+
+
+    # Définit le vainqueur de la partie et ajoute ces résulats aux données récoltées
+    if a != b:
+        if (a>b and b+1==a) or (a<b and a+b==2):
+            win_count += 1
+            trier()
+        else:
+            lose_count += 1
+
+    else:
+        nul_count += 1
+
+while i != t:
+    game()
+    i += 1
+
+# Mise en forme des données
+g = max(papier_count, pierre_count, ciseaux_count)
+def whosbigger():
+    if g == papier_count:
+        return "papier"
+    elif g == pierre_count:
+        return "pierre"
+    else:
+        return "ciseaux"
+print(papier_count,"papier", pierre_count,"pierres", ciseaux_count, "ciseaux")
+x = whosbigger()
+print("Victoire : ", win_count*100/t, "% / Défaites : ", lose_count*100/t, "% / Nulles : ", nul_count*100/t, "%")
+print("Le plus de victoires a été fait par", x, "en : ", g, "coups")
